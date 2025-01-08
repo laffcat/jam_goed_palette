@@ -17,19 +17,19 @@ script = ExtResource("1_lgi77")
 texture = ExtResource("1_cm6mw")
 hframes = 2
 
-[node name="TankTop" type="Node2D" parent="SprTankBase"]
+[node name="TankTop" type="Node2D" parent="."]
 
-[node name="SprTankBarrel" type="Sprite2D" parent="SprTankBase/TankTop"]
+[node name="SprTankBarrel" type="Sprite2D" parent="TankTop"]
 position = Vector2(15, 0)
 texture = ExtResource("2_boecl")
 hframes = 2
 
-[node name="SprTankHead" type="Sprite2D" parent="SprTankBase/TankTop"]
+[node name="SprTankHead" type="Sprite2D" parent="TankTop"]
 texture = ExtResource("3_de8fb")
 offset = Vector2(0.5, 0)
 hframes = 2
 
-[node name="BulletSpawn" type="Node2D" parent="SprTankBase/TankTop"]
+[node name="BulletSpawn" type="Node2D" parent="TankTop"]
 position = Vector2(24, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

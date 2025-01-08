@@ -1,6 +1,8 @@
-[gd_scene load_steps=6 format=4 uid="uid://cdu14b4vpdt3x"]
+[gd_scene load_steps=8 format=4 uid="uid://cdu14b4vpdt3x"]
 
 [ext_resource type="Texture2D" uid="uid://bri3y7b34dv2" path="res://sprites/topdown/world/tiles_grass.png" id="1_0lci8"]
+[ext_resource type="Texture2D" uid="uid://dtxm4kmfhn5w6" path="res://sprites/cursor.png" id="1_s8r8c"]
+[ext_resource type="Script" path="res://scripts/cursor.gd" id="1_vkqsu"]
 [ext_resource type="PackedScene" uid="uid://dj2w2e4oam4c6" path="res://scenes/top/player/player_top_down.tscn" id="2_pi1rp"]
 [ext_resource type="PackedScene" uid="uid://bm61wxbwhwlhv" path="res://scenes/top/enemy_top/robit.tscn" id="3_cco87"]
 
@@ -15,7 +17,12 @@ texture = ExtResource("1_0lci8")
 [sub_resource type="TileSet" id="TileSet_2yrxy"]
 sources/0 = SubResource("TileSetAtlasSource_xxujr")
 
-[node name="Node2D" type="Node2D"]
+[node name="Game" type="Node2D"]
+
+[node name="Cursor" type="Sprite2D" parent="."]
+z_index = 50
+texture = ExtResource("1_s8r8c")
+script = ExtResource("1_vkqsu")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
