@@ -1,16 +1,23 @@
 extends Node2D
 
+var dir : Vector2
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+	var tween := create_tween()
+	tween.tween_property($MeshInstance2D, "scale", Vector2.ZERO, .3)
+	await get_tree().create_timer(.1).timeout
+	$Area2D.queue_free()
+	await tween.finished
+	queue_free()
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body is EnemyTop: if !body.invuln:
-		body.damage(5, global_position.distance_to(body.global_position), global_position.direction_to(body.global_position))
+		call_deferred("boom", body)
+
+func boom(body : EnemyTop):
+	body.damage(
+		5, 
+		lerp(dir, global_position.direction_to(body.global_position), .25).normalized()
+	)

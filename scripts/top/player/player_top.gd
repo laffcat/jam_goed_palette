@@ -13,13 +13,17 @@ var tween_shoot : Tween
 
 var active := true
 
-func pause(): active = false
-func unpause(): active = true
+func pause(): 
+	active = false
+	$"../Camera2D/MenuPause".visible = true
+func unpause(): 
+	active = true
+	$"../Camera2D/MenuPause".visible = false
 
 func _ready():
 	Globals.paused.connect(pause)
 	Globals.unpaused.connect(unpause)
-	Globals.player_current = self
+	Globals.player = self
 
 
 func _process(delta: float) -> void:
@@ -52,7 +56,7 @@ func shoot():
 	tween_shoot.tween_property($TankTop/SprTankBarrel, "position", Vector2(15.0, 0.0), .4)
 	
 	var new_bullet := BULLET1.instantiate()
-	$"..".add_child(new_bullet)
+	Globals.main.add_child(new_bullet)
 	new_bullet.dir = global_position.direction_to($TankTop/BulletSpawn.global_position)
 	new_bullet.global_position = $TankTop/BulletSpawn.global_position
 

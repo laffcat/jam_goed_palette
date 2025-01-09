@@ -4,12 +4,13 @@
 [ext_resource type="Script" path="res://scripts/top/player/bullet_tank.gd" id="1_pqif1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nad8y"]
-radius = 4.0
+radius = 8.0
 
 [node name="BulletTank" type="Node2D"]
 script = ExtResource("1_pqif1")
 
 [node name="Area2D" type="Area2D" parent="."]
+position = Vector2(6, 0)
 collision_mask = 2
 monitorable = false
 

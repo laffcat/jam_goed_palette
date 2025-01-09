@@ -1,6 +1,8 @@
 class_name BulletTank
 extends Node2D
 
+const BOOM = preload("res://scenes/top/player/boom.tscn")
+
 var time := 3.0
 var speed := 300.0
 var velocity : Vector2
@@ -13,6 +15,7 @@ func unpause(): active = true
 func _ready():
 	Globals.paused.connect(pause)
 	Globals.unpaused.connect(unpause)
+	
 
 
 var dir : Vector2 :
@@ -31,12 +34,16 @@ func _physics_process(delta: float) -> void:
 		global_position += velocity * delta
 
 
-
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body is not PlayerTop:
-		boom()
+		call_deferred("boom")
 
-
+func boom():
+	var explosion := BOOM.instantiate()
+	Globals.main.add_child(explosion)
+	explosion.global_position = global_position
+	explosion.dir = dir
+	queue_free()
 
 
 

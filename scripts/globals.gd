@@ -7,7 +7,8 @@ signal unpaused
 
 const HALF_SCR = Vector2(240, 160)
 
-var player_current : CharacterBody2D
+var main : Node2D
+var player : CharacterBody2D
 var cursor : Cursor
 
 func _unhandled_input(event: InputEvent) -> void:

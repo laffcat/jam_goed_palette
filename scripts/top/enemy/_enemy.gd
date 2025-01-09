@@ -4,6 +4,8 @@ extends CharacterBody2D
 
 const SPEED = 100.0
 var vel_add := Vector2.ZERO
+var vel_add_tween : Tween
+var vel_mult := 1.0
 var active := true
 var invuln := false
 var health := 6
@@ -17,13 +19,40 @@ func _ready():
 	
 func _physics_process(delta: float) -> void:
 	if active:
-		var dir = global_position.direction_to(Globals.player_current.global_position)
-		rotation = dir.angle()
-		velocity = dir * SPEED + vel_add
+		var vel_base : Vector2
+		if !invuln:
+			var dir = global_position.direction_to(Globals.player.global_position)
+			rotation = dir.angle()
+			vel_base = dir * SPEED * vel_mult
+		else: vel_base = Vector2.ZERO
+		velocity = vel_base + vel_add
 		move_and_slide()
-		if vel_add:
-			vel_add.limit_length( max(0.0, vel_add.length() - 200.0 * delta) )
 
-func damage(dmg : int, dist : float, dir : Vector2):
+func damage(dmg : int, dir : Vector2):
+	if invuln: return
 	health -= dmg
-	vel_add = dir * (150.0 - dist) # TODO: dist almost certainly needs a multiplier here
+	vel_add = dir * 150.0 
+	vel_mult = 0.0
+	if vel_add_tween: vel_add_tween.kill()
+	vel_add_tween = create_tween()
+	vel_add_tween.tween_property(self, "vel_add", Vector2.ZERO, .5)
+	
+	invuln = true
+	$Sprite2D.frame = 1
+	await get_tree().create_timer(.3).timeout
+	if health > 0:
+		invuln = false
+		$Sprite2D.frame = 0
+	else:
+		collision_layer &= 0 << 1
+		$Sprite2D.frame = 2
+		await get_tree().create_timer(1.0).timeout
+		queue_free()
+	
+	
+	await vel_add_tween.finished
+	if vel_add_tween: vel_add_tween.kill()
+	vel_add_tween = create_tween()
+	vel_add_tween.tween_property(self, "vel_mult", 1.0, .4)
+		
+	
