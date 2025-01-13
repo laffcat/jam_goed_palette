@@ -11,7 +11,21 @@ var main : Node2D
 var player : CharacterBody2D
 var cursor : Cursor
 
-func _unhandled_input(event: InputEvent) -> void:
+#var menus_active := false
+var menu_current = null:
+	set(new):
+		if menu_current != null:
+			menu_current.deactivate()
+		if new != null:
+			new.activate()
+		menu_current = new
+			
+			
+#var menu_cursor_current = null
+
+func _input(event: InputEvent):
+	if menu_current != null:
+		menu_current.receive_input(event)
 	if event.is_action_pressed("pause"):
 		if !is_paused:
 			is_paused = true
@@ -19,3 +33,4 @@ func _unhandled_input(event: InputEvent) -> void:
 		else:
 			is_paused = false
 			unpaused.emit()
+		

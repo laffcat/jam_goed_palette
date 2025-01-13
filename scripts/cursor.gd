@@ -9,4 +9,4 @@ func _ready() -> void:
 
 func _input(event):
 	if event is InputEventMouseMotion:
-		global_position = event.position - Globals.HALF_SCR
+		position = event.position - Globals.HALF_SCR

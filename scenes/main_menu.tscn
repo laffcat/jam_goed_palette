@@ -1,0 +1,92 @@
+[gd_scene load_steps=14 format=3 uid="uid://bimxbvdwe2jyp"]
+
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_1oeix"]
+[ext_resource type="Texture2D" uid="uid://cjol4es857po1" path="res://sprites/menu/main_btn_play.png" id="1_wn5it"]
+[ext_resource type="Texture2D" uid="uid://dycqwulov6b4k" path="res://sprites/menu/main_btn_options.png" id="2_dxgqc"]
+[ext_resource type="Texture2D" uid="uid://bhk4db44cfl6y" path="res://sprites/menu/main_btn_credits.png" id="3_fv1x8"]
+[ext_resource type="Texture2D" uid="uid://cdn5dsp7rnotg" path="res://sprites/menu/main_deco_runner.png" id="4_jmd3q"]
+[ext_resource type="Script" path="res://scenes/menu_title.gd" id="5_877jm"]
+[ext_resource type="Script" path="res://scripts/misc/tilty_sprite.gd" id="5_x1y1h"]
+[ext_resource type="Script" path="res://scripts/menu_button.gd" id="6_0a46f"]
+[ext_resource type="Texture2D" uid="uid://cg7fq4oklxnc7" path="res://sprites/menu/main_deco_tank.png" id="6_kba0c"]
+[ext_resource type="Texture2D" uid="uid://bf0et8cc4j35b" path="res://sprites/menu/main_title.png" id="7_lsqjp"]
+[ext_resource type="Texture2D" uid="uid://bwrc5md3xw406" path="res://sprites/menu/main_btn_back.png" id="8_sd6as"]
+[ext_resource type="Script" path="res://scenes/menu_options.gd" id="11_8shur"]
+[ext_resource type="Script" path="res://scenes/menu_credits.gd" id="13_62rk0"]
+
+[node name="MainMenu" type="Node2D" node_paths=PackedStringArray("submenus")]
+script = ExtResource("1_1oeix")
+submenus = [NodePath("MenuTitle"), NodePath("MenuOptions"), NodePath("MenuCredits")]
+color_unselected = Color(0.129412, 0.631373, 0.47451, 1)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 480.0
+offset_bottom = 320.0
+color = Color(0.14902, 0.329412, 0.486275, 1)
+
+[node name="MainDecoRunner" type="Sprite2D" parent="."]
+position = Vector2(408, 248)
+rotation = -0.0992256
+texture = ExtResource("4_jmd3q")
+script = ExtResource("5_x1y1h")
+tilt_mult = 0.1
+time_mult = 2.0
+
+[node name="MainDecoTank" type="Sprite2D" parent="."]
+position = Vector2(88, 248)
+rotation = 0.0992256
+texture = ExtResource("6_kba0c")
+script = ExtResource("5_x1y1h")
+tilt_mult = -0.1
+time_mult = 2.0
+
+[node name="MenuTitle" type="Node2D" parent="."]
+script = ExtResource("5_877jm")
+
+[node name="MainTitle" type="Sprite2D" parent="MenuTitle"]
+position = Vector2(240, 104)
+texture = ExtResource("7_lsqjp")
+
+[node name="MainBtnPlay" type="Sprite2D" parent="MenuTitle" node_paths=PackedStringArray("up", "down")]
+position = Vector2(256, 208)
+texture = ExtResource("1_wn5it")
+script = ExtResource("6_0a46f")
+btn_name = "Play"
+up = NodePath("../MainBtnCredits")
+down = NodePath("../MainBtnOptions")
+
+[node name="MainBtnOptions" type="Sprite2D" parent="MenuTitle" node_paths=PackedStringArray("up", "down")]
+modulate = Color(0.129412, 0.631373, 0.47451, 1)
+position = Vector2(256, 248)
+texture = ExtResource("2_dxgqc")
+script = ExtResource("6_0a46f")
+btn_name = "Options"
+up = NodePath("../MainBtnPlay")
+down = NodePath("../MainBtnCredits")
+
+[node name="MainBtnCredits" type="Sprite2D" parent="MenuTitle" node_paths=PackedStringArray("up", "down")]
+modulate = Color(0.129412, 0.631373, 0.47451, 1)
+position = Vector2(256, 280)
+texture = ExtResource("3_fv1x8")
+script = ExtResource("6_0a46f")
+btn_name = "Credits"
+up = NodePath("../MainBtnOptions")
+down = NodePath("../MainBtnPlay")
+
+[node name="MenuOptions" type="Node2D" parent="."]
+visible = false
+script = ExtResource("11_8shur")
+
+[node name="MainBtnBack" type="Sprite2D" parent="MenuOptions"]
+modulate = Color(0.129412, 0.631373, 0.47451, 1)
+position = Vector2(96, 160)
+texture = ExtResource("8_sd6as")
+
+[node name="MenuCredits" type="Node2D" parent="."]
+visible = false
+script = ExtResource("13_62rk0")
+
+[node name="MainBtnBack" type="Sprite2D" parent="MenuCredits"]
+modulate = Color(0.129412, 0.631373, 0.47451, 1)
+position = Vector2(96, 160)
+texture = ExtResource("8_sd6as")
