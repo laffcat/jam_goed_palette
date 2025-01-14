@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://sa53wq1i5vpd" path="res://sprites/topdown/player/tank_beam.png" id="2_3hcnf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nad8y"]
-radius = 19.2354
+radius = 14.0
 
 [node name="BulletTank" type="Node2D"]
 script = ExtResource("1_jvcv8")

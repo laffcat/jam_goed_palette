@@ -44,7 +44,7 @@ func damage(dmg : int, dir : Vector2):
 		invuln = false
 		$Sprite2D.frame = 0
 	else:
-		collision_layer &= 0 << 1
+		Globals.score += 10
 		$Sprite2D.frame = 2
 		await get_tree().create_timer(1.0).timeout
 		queue_free()

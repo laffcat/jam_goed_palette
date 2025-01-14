@@ -1,0 +1,101 @@
+[gd_scene load_steps=14 format=4 uid="uid://bigmffbu3smfx"]
+
+[ext_resource type="Script" path="res://bitFolder/side_view_world.gd" id="1_ugeb5"]
+[ext_resource type="PackedScene" uid="uid://blqnbweumcaup" path="res://bitFolder/LevelParts/tile_map_layer0.tscn" id="2_nvwtj"]
+[ext_resource type="PackedScene" uid="uid://bc08gr3ma0glj" path="res://bitFolder/side_character.tscn" id="2_p530g"]
+[ext_resource type="PackedScene" uid="uid://fq5j5ue73imq" path="res://bitFolder/LevelParts/tile_map_end2.tscn" id="2_wnlaq"]
+[ext_resource type="PackedScene" uid="uid://ibb6ln7ea215" path="res://bitFolder/spawner_new.tscn" id="3_jsjbd"]
+[ext_resource type="PackedScene" uid="uid://ds81kwvvoaahf" path="res://bitFolder/LevelParts/tile_map1.tscn" id="3_v1eu6"]
+[ext_resource type="PackedScene" uid="uid://vyxg8q6h3cbb" path="res://bitFolder/LevelParts/tile_map2.tscn" id="4_4pial"]
+[ext_resource type="PackedScene" uid="uid://bkn8idh1nrk0l" path="res://bitFolder/ui.tscn" id="4_rphau"]
+[ext_resource type="PackedScene" uid="uid://cvs4br64et2ux" path="res://bitFolder/LevelParts/tile_map3.tscn" id="5_bbm4j"]
+[ext_resource type="PackedScene" uid="uid://d21he68618l4" path="res://bitFolder/LevelParts/tile_map4.tscn" id="6_yh5m4"]
+[ext_resource type="PackedScene" uid="uid://b8dvlshdnxaui" path="res://bitFolder/LevelParts/tile_map5.tscn" id="7_8e8li"]
+[ext_resource type="PackedScene" uid="uid://c7qtunqn5jhkm" path="res://bitFolder/LevelParts/tile_map6.tscn" id="8_37e5d"]
+[ext_resource type="PackedScene" uid="uid://c5fxcs8ic03bd" path="res://bitFolder/exit_point.tscn" id="12_hut4r"]
+
+[node name="SideViewWorld" type="Node2D"]
+script = ExtResource("1_ugeb5")
+
+[node name="Tint" type="Node2D" parent="."]
+
+[node name="TileMapEnd" parent="Tint" instance=ExtResource("2_wnlaq")]
+position = Vector2(-1432, 0)
+
+[node name="TileDepo" type="Node2D" parent="Tint"]
+position = Vector2(-912, 0)
+
+[node name="TileMapLayer2" parent="Tint/TileDepo" instance=ExtResource("3_v1eu6")]
+
+[node name="TileMapLayer1" parent="Tint/TileDepo" instance=ExtResource("4_4pial")]
+
+[node name="TileMapLayer3" parent="Tint/TileDepo" instance=ExtResource("5_bbm4j")]
+
+[node name="TileMapLayer4" parent="Tint/TileDepo" instance=ExtResource("6_yh5m4")]
+
+[node name="TileMapLayer5" parent="Tint/TileDepo" instance=ExtResource("7_8e8li")]
+
+[node name="TileMapLayer6" parent="Tint/TileDepo" instance=ExtResource("8_37e5d")]
+
+[node name="TileMaps" type="Node2D" parent="Tint"]
+
+[node name="TileMapLayer" parent="Tint/TileMaps" instance=ExtResource("2_nvwtj")]
+tile_map_data = PackedByteArray("AAAAAAoAAAABAAAAAAABAAoAAAABAAAAAAACAAoAAAABAAAAAAADAAoAAAABAAAAAAAEAAoAAAABAAAAAAAFAAoAAAABAAAAAAAGAAoAAAABAAAAAAAHAAoAAAABAAAAAAAIAAoAAAABAAAAAAAJAAoAAAABAAAAAAAKAAoAAAABAAAAAAALAAoAAAABAAAAAAAMAAoAAAABAAAAAAANAAoAAAABAAAAAAAOAAoAAAABAAAAAAAPAAoAAAABAAAAAAAQAAoAAAABAAAAAAARAAoAAAABAAAAAAASAAoAAAABAAAAAAATAAoAAAABAAAAAAAUAAoAAAABAAAAAAAIAAUAAAAAAAMAAAAJAAUAAAABAAMAAAAKAAUAAAABAAMAAAAdAAoAAAABAAAAAAAcAAoAAAABAAAAAAAbAAoAAAABAAAAAAAaAAoAAAABAAAAAAAZAAoAAAABAAAAAAAYAAoAAAABAAAAAAAXAAoAAAABAAAAAAAWAAoAAAABAAAAAAAVAAoAAAABAAAAAAD//woAAAABAAAAAAD+/woAAAABAAAAAAD9/woAAAABAAAAAAD8/woAAAABAAAAAAD7/woAAAABAAAAAAD6/woAAAABAAAAAAD5/woAAAABAAAAAAD4/woAAAABAAAAAAD3/woAAAABAAAAAAD2/woAAAABAAAAAAD1/woAAAABAAAAAAD0/woAAAABAAAAAADz/woAAAABAAAAAADy/woAAAABAAAAAAD0/wkAAAACAAEAAAD0/wgAAAACAAEAAAD0/wcAAAACAAEAAAD0/wYAAAACAAEAAAD0/wUAAAACAAEAAAD0/wQAAAACAAEAAAD0/wMAAAACAAEAAAD0/wIAAAACAAEAAAD0/wEAAAACAAEAAAD0/wAAAAACAAEAAAD0////AAACAAEAAAD0//7/AAACAAEAAAD0//3/AAACAAEAAAD0//z/AAACAAAAAADz//z/AAABAAAAAADy//z/AAABAAAAAADx//z/AAABAAAAAADw//z/AAABAAAAAADw//3/AAABAAEAAADw//7/AAABAAEAAADw////AAABAAEAAADx/wAAAAABAAEAAADx/wEAAAABAAEAAADx/wIAAAABAAEAAADx/wMAAAABAAEAAADy/wQAAAABAAEAAADy/wUAAAABAAEAAADy/wYAAAABAAEAAADw/wAAAAABAAEAAADw/wEAAAABAAEAAADw/wIAAAABAAEAAADw/wMAAAABAAEAAADw/wQAAAABAAEAAADw/wUAAAABAAEAAADw/wYAAAABAAEAAADw/wcAAAABAAEAAADw/wgAAAABAAEAAADw/wkAAAABAAEAAADx//3/AAABAAEAAADx//7/AAABAAEAAADx////AAABAAEAAADx/wQAAAABAAEAAADx/wUAAAABAAEAAADx/wYAAAABAAEAAADx/wcAAAABAAEAAADx/wgAAAABAAEAAADx/wkAAAABAAEAAADy//3/AAABAAEAAADy//7/AAABAAEAAADy////AAABAAEAAADy/wAAAAABAAEAAADy/wEAAAABAAEAAADy/wIAAAABAAEAAADy/wMAAAABAAEAAADy/wcAAAABAAEAAADy/wgAAAABAAEAAADy/wkAAAABAAEAAADz//3/AAABAAEAAADz//7/AAABAAEAAADz////AAABAAEAAADz/wAAAAABAAEAAADz/wEAAAABAAEAAADz/wIAAAABAAEAAADz/wMAAAABAAEAAADz/wQAAAABAAEAAADz/wUAAAABAAEAAADz/wYAAAABAAEAAADz/wcAAAABAAEAAADz/wgAAAABAAEAAADz/wkAAAABAAEAAADv/woAAAABAAAAAADw/woAAAABAAAAAADx/woAAAABAAAAAAD3/wgAAAAAAAMAAAD4/wgAAAABAAMAAAD5/wgAAAACAAMAAAD9/wcAAAAAAAMAAAD+/wcAAAABAAMAAAD//wcAAAACAAMAAAADAAYAAAAAAAMAAAAEAAYAAAABAAMAAAAFAAYAAAACAAMAAAALAAUAAAACAAMAAAAIAAgAAAAAAAAAAAAIAAkAAAAAAAEAAAAJAAgAAAABAAAAAAAJAAkAAAABAAEAAAAKAAgAAAACAAAAAAAKAAkAAAACAAEAAAD1/wUAAAABAAAAAAD2/wUAAAACAAAAAAD2/wYAAAACAAEAAAD2/wcAAAACAAEAAAD2/wgAAAACAAEAAAD2/wkAAAACAAEAAAD1/wYAAAABAAEAAAD1/wcAAAABAAEAAAD1/wgAAAABAAEAAAD1/wkAAAABAAEAAAANAAIAAAAAAAMAAAAOAAIAAAABAAMAAAAPAAIAAAACAAMAAAAAAAEAAAAEAAAAAAACAAIAAAAEAAAAAAD+////AAAEAAAAAAAGAAIAAAAAAAMAAAAHAAIAAAACAAMAAAA=")
+
+[node name="SideCharacter" parent="Tint" instance=ExtResource("2_p530g")]
+position = Vector2(22, 158)
+
+[node name="Camera2D" type="Camera2D" parent="Tint/SideCharacter"]
+limit_top = -400
+limit_bottom = 200
+
+[node name="ColorRect" type="ColorRect" parent="Tint/SideCharacter/Camera2D"]
+z_index = -1
+offset_left = -387.0
+offset_top = -622.0
+offset_right = 353.0
+offset_bottom = 498.0
+color = Color(0, 0, 0, 1)
+
+[node name="SpawnerGroup" type="Node2D" parent="Tint"]
+
+[node name="Spawner" parent="Tint/SpawnerGroup" instance=ExtResource("3_jsjbd")]
+position = Vector2(240, 152)
+
+[node name="Spawner2" parent="Tint/SpawnerGroup" instance=ExtResource("3_jsjbd")]
+position = Vector2(240, 120)
+
+[node name="Spawner3" parent="Tint/SpawnerGroup" instance=ExtResource("3_jsjbd")]
+position = Vector2(240, 88)
+
+[node name="Spawner4" parent="Tint/SpawnerGroup" instance=ExtResource("3_jsjbd")]
+position = Vector2(240, 56)
+
+[node name="Spawner5" parent="Tint/SpawnerGroup" instance=ExtResource("3_jsjbd")]
+position = Vector2(240, 24)
+
+[node name="Spawner6" parent="Tint/SpawnerGroup" instance=ExtResource("3_jsjbd")]
+position = Vector2(240, -8)
+
+[node name="Spawner7" parent="Tint/SpawnerGroup" instance=ExtResource("3_jsjbd")]
+position = Vector2(240, -40)
+
+[node name="Spawner8" parent="Tint/SpawnerGroup" instance=ExtResource("3_jsjbd")]
+position = Vector2(320, 152)
+
+[node name="Spawner9" parent="Tint/SpawnerGroup" instance=ExtResource("3_jsjbd")]
+position = Vector2(368, 152)
+
+[node name="Spawner11" parent="Tint/SpawnerGroup" instance=ExtResource("3_jsjbd")]
+position = Vector2(456, 152)
+
+[node name="Spawner10" parent="Tint/SpawnerGroup" instance=ExtResource("3_jsjbd")]
+position = Vector2(320, 120)
+
+[node name="Exit_point" parent="." instance=ExtResource("12_hut4r")]
+position = Vector2(-160, 63)
+required_inv = 50
+
+[node name="UI" parent="." instance=ExtResource("4_rphau")]
+
+[connection signal="update_ui" from="Tint/SideCharacter" to="UI" method="_on_side_character_update_ui"]

@@ -7,10 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://bgslk3o2chisa" path="res://sprites/topdown/player/tank_top1.png" id="3_de8fb"]
 [ext_resource type="AudioStream" uid="uid://i3dcdqrr6jac" path="res://sounds/SFX/TANK_SFX/sfx_shot_2.wav" id="3_o32cr"]
 [ext_resource type="AudioStream" uid="uid://bxi6clb18kyu8" path="res://sounds/SFX/TANK_SFX/sfx_shot_3.wav" id="4_wdu0x"]
-[ext_resource type="AudioStream" uid="uid://ivvo8j2v1v42" path="res://sounds/Music/Pallet_Color_GJ_Gameplay_155bpm_4_4.wav" id="5_2v0ej"]
 [ext_resource type="AudioStream" uid="uid://clpvsr256t7tp" path="res://sounds/SFX/TANK_SFX/sfx_lasercanon_charge.wav" id="6_436qk"]
 [ext_resource type="AudioStream" uid="uid://ccxrxsg8tro2o" path="res://sounds/SFX/sfx_hurt.tres" id="6_sv0xb"]
 [ext_resource type="AudioStream" uid="uid://dnp6272wj8n1l" path="res://sounds/SFX/TANK_SFX/sfx_lasercanon_shot.wav" id="7_sd4cw"]
+[ext_resource type="AudioStream" uid="uid://cs4wyal0s8oe6" path="res://sounds/SFX/TANK_SFX/sfx_gameover.wav" id="8_ibi7r"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_vsldx"]
 random_pitch = 1.06
@@ -32,12 +32,6 @@ script = ExtResource("1_lgi77")
 
 [node name="SFX" type="Node" parent="."]
 
-[node name="musicPLACEHOLDER" type="AudioStreamPlayer" parent="SFX"]
-stream = ExtResource("5_2v0ej")
-volume_db = -9.074
-autoplay = true
-bus = &"Music"
-
 [node name="ShootBasic" type="AudioStreamPlayer" parent="SFX"]
 stream = SubResource("AudioStreamRandomizer_vsldx")
 volume_db = 2.094
@@ -56,6 +50,10 @@ pitch_scale = 1.2
 stream = ExtResource("6_sv0xb")
 pitch_scale = 0.79
 bus = &"SFX"
+
+[node name="GameOver" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("8_ibi7r")
+volume_db = -8.803
 
 [node name="SprTankBase" type="Sprite2D" parent="."]
 texture = ExtResource("1_cm6mw")

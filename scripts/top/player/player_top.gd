@@ -48,6 +48,10 @@ func _ready():
 	Globals.player = self
 	await get_tree().create_timer(.1).timeout
 	invuln = false
+	if OS.get_name() != "HTML5":
+		MusicGlobal.pitch_scale = 1
+		MusicGlobal.volume_db = -9.0
+	MusicGlobal.play()
 
 
 func _process(delta: float) -> void:
@@ -107,7 +111,7 @@ func shoot_beam():
 	$Camera2D/HUD/MouseIconM2.modulate = Color.BLACK
 	var tween_cooldown_beam := create_tween()
 	$Camera2D/HUD/MouseButton2.material.set_shader_parameter("progress", 0.0)
-	tween_cooldown_beam.tween_property($Camera2D/HUD/MouseButton2, "material:shader_parameter/progress", 1.0, 9.0)
+	tween_cooldown_beam.tween_property($Camera2D/HUD/MouseButton2, "material:shader_parameter/progress", 1.0, 13.0)
 	$SFX/ShootBeamCharge.play(.8)
 	
 	if tween_shoot: tween_shoot.kill()
@@ -143,19 +147,27 @@ func hurt():
 	sprite(1)
 	hp -= 1
 	update_hp_meter()
-	await get_tree().create_timer(1.2).timeout
+	await get_tree().create_timer(.6).timeout
 	if hp > 0:
-		invuln = false
 		sprite(0)
+		await get_tree().create_timer(.25).timeout
+		invuln = false
+		for each in $AreaHurt.get_overlapping_bodies(): 
+			if each is EnemyTop and each.global_position.distance_to(global_position) < 20: 
+				hurt()
+				break
 	else:
-		if OS.get_name() == "HTML5":
-			$SFX/musicPLACEHOLDER.stop()
-		else:
-			$SFX/musicPLACEHOLDER.pitch_scale = .8
-			$SFX/musicPLACEHOLDER.play($SFX/musicPLACEHOLDER.get_playback_position())
+		var t := MusicGlobal.get_playback_position()
+		MusicGlobal.stop()
+		$SFX/GameOver.play()
 		sprite(2)
 		await get_tree().create_timer(.6).timeout
 		Globals.menu_current = $Camera2D/MenuGameOver
+		await get_tree().create_timer(3.0).timeout
+		if !OS.get_name() == "HTML5":
+			MusicGlobal.volume_db = -13.0
+			MusicGlobal.pitch_scale = .8
+			MusicGlobal.play(t)
 
 func update_hp_meter():
 	for each in 6:
@@ -164,6 +176,7 @@ func update_hp_meter():
 
 func _on_area_hurt_body_entered(body: Node2D) -> void:
 	if body is EnemyTop and body.global_position.distance_to(global_position) < 20: 
+		if body.health <= 0: return
 		hurt()
 
 

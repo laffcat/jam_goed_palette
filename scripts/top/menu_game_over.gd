@@ -2,6 +2,7 @@ extends Node2D
 
 func activate():
 	visible = true
+	$ScoreDisplayHigh.setup_display()
 
 func deactivate():
 	visible = false

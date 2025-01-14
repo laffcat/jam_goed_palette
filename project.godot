@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Globals="*res://scripts/globals.gd"
+MusicGlobal="*res://scripts/music_global.gd"
 
 [display]
 
@@ -25,6 +26,10 @@ window/size/viewport_width=480
 window/size/viewport_height=320
 window/stretch/mode="viewport"
 window/stretch/scale_mode="integer"
+
+[gui]
+
+theme/default_font_antialiasing=0
 
 [input]
 
@@ -92,3 +97,4 @@ common/physics_jitter_fix=0.7
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+anti_aliasing/screen_space_roughness_limiter/enabled=false

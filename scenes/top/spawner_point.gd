@@ -1,10 +1,10 @@
 extends Node2D
 
 const ROBIT = preload("res://scenes/top/enemy_top/robit.tscn")
-const SPAWN_DELAY := .86
+const SPAWN_DELAY := .92
 
 var spawn_delay_mult := 1.0
-var spawning := true
+#var spawning := true
 var active := true
 var clock := 0.0
 
@@ -26,7 +26,7 @@ func _process(delta: float) -> void:
 
 
 func spawn():
-	$"..".rotate(deg_to_rad(randi_range(30, 100)))
+	$"..".rotate(deg_to_rad(randi_range(70, 130)))
 	var new_spawn : EnemyTop = ROBIT.instantiate()
 	$"../../../../EnemyRoot".add_child(new_spawn)
 	new_spawn.global_position = global_position

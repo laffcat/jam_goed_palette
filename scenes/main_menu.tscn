@@ -1,8 +1,9 @@
-[gd_scene load_steps=28 format=3 uid="uid://bimxbvdwe2jyp"]
+[gd_scene load_steps=29 format=3 uid="uid://bimxbvdwe2jyp"]
 
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_1oeix"]
 [ext_resource type="Texture2D" uid="uid://cjol4es857po1" path="res://sprites/menu/main_btn_play.png" id="1_wn5it"]
 [ext_resource type="Texture2D" uid="uid://dycqwulov6b4k" path="res://sprites/menu/main_btn_options.png" id="2_dxgqc"]
+[ext_resource type="AudioStream" uid="uid://btf6p2c2pp37d" path="res://sounds/Music/Pallet_color_Game_Jam_theme_130bpm.wav" id="2_piql3"]
 [ext_resource type="AudioStream" uid="uid://1qwrwg5idgoy" path="res://sounds/SFX/UI_SFX/boop1.wav" id="2_v4ylg"]
 [ext_resource type="AudioStream" uid="uid://66vm8xg8qm7y" path="res://sounds/SFX/UI_SFX/boop2.wav" id="3_dxr6h"]
 [ext_resource type="Texture2D" uid="uid://bhk4db44cfl6y" path="res://sprites/menu/main_btn_credits.png" id="3_fv1x8"]
@@ -27,7 +28,6 @@
 [ext_resource type="Texture2D" uid="uid://bsufe634yxh67" path="res://sprites/menu/credits/lam.png" id="25_7tnlx"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_5kl0e"]
-random_pitch = 1.05
 streams_count = 3
 stream_0/stream = ExtResource("2_v4ylg")
 stream_1/stream = ExtResource("3_dxr6h")
@@ -45,19 +45,29 @@ script = ExtResource("1_1oeix")
 submenus = [NodePath("MenuTitle"), NodePath("MenuOptions"), NodePath("MenuCredits")]
 color_unselected = Color(0.129412, 0.631373, 0.47451, 1)
 
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_piql3")
+volume_db = -9.0
+autoplay = true
+bus = &"Music"
+
 [node name="SFX" type="Node" parent="."]
 
 [node name="Boop" type="AudioStreamPlayer" parent="SFX"]
 stream = SubResource("AudioStreamRandomizer_5kl0e")
 volume_db = -8.376
+bus = &"SFX"
 
 [node name="DingSmall" type="AudioStreamPlayer" parent="SFX"]
 stream = SubResource("AudioStreamRandomizer_xr1lq")
-volume_db = -5.584
+volume_db = -6.264
 pitch_scale = 0.94
+bus = &"SFX"
 
 [node name="DingBig" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource("8_tyrju")
+volume_db = -4.026
+bus = &"SFX"
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_right = 480.0
@@ -66,7 +76,7 @@ color = Color(0.14902, 0.329412, 0.486275, 1)
 
 [node name="MainDecoRunner" type="Sprite2D" parent="."]
 position = Vector2(408, 248)
-rotation = 0.0449177
+rotation = 0.0796867
 texture = ExtResource("4_jmd3q")
 script = ExtResource("5_x1y1h")
 tilt_mult = 0.1
@@ -74,7 +84,7 @@ time_mult = 2.0
 
 [node name="MainDecoTank" type="Sprite2D" parent="."]
 position = Vector2(88, 248)
-rotation = -0.0449177
+rotation = -0.0796867
 texture = ExtResource("6_kba0c")
 script = ExtResource("5_x1y1h")
 tilt_mult = -0.1
@@ -85,7 +95,7 @@ script = ExtResource("5_877jm")
 
 [node name="MainJamLogo" type="Sprite2D" parent="MenuTitle"]
 position = Vector2(416, 56)
-rotation = -0.187744
+rotation = 0.0150091
 texture = ExtResource("13_gd5lq")
 script = ExtResource("5_x1y1h")
 tilt_mult = 0.4

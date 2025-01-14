@@ -41,6 +41,7 @@ func receive_input(event: InputEvent):
 			if event.is_action_pressed("jump"):
 				match current_button.btn_name:
 					"Play":
+						$Music.stop()
 						$SFX/DingBig.play()
 						Globals.menu_current = null
 						await get_tree().create_timer(.9).timeout
@@ -85,7 +86,9 @@ func receive_input(event: InputEvent):
 
 
 
-func _ready(): Globals.menu_current = self
+func _ready(): 
+	Globals.menu_current = self
+	MusicGlobal.stop()
 
 
 
