@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cdu14b4vpdt3x"]
+[gd_scene load_steps=24 format=3 uid="uid://cdu14b4vpdt3x"]
 
 [ext_resource type="Script" path="res://scenes/top/game_topdown.gd" id="1_35ae2"]
 [ext_resource type="Texture2D" uid="uid://dtxm4kmfhn5w6" path="res://sprites/cursor.png" id="1_s8r8c"]
@@ -12,9 +12,24 @@
 [ext_resource type="Script" path="res://scripts/top/menu_game_over.gd" id="5_npheh"]
 [ext_resource type="Texture2D" uid="uid://boehd7fjg826k" path="res://sprites/hud/hp.png" id="6_unjmp"]
 [ext_resource type="Texture2D" uid="uid://sh8bh6dfsedx" path="res://sprites/menu/pause_options.png" id="7_7vilc"]
+[ext_resource type="Texture2D" uid="uid://b6apuh562x737" path="res://sprites/hud/mouse.png" id="7_f2oc6"]
 [ext_resource type="Script" path="res://scripts/top/menu_pause.gd" id="7_sqj87"]
 [ext_resource type="Script" path="res://scenes/top/spawner_point.gd" id="8_05q0r"]
+[ext_resource type="Shader" path="res://shaders/cooldown_progress.gdshader" id="8_436t0"]
 [ext_resource type="Texture2D" uid="uid://det3jsvylumql" path="res://sprites/menu/arrow.png" id="8_ry484"]
+[ext_resource type="Texture2D" uid="uid://dlhhf17w4k5a2" path="res://sprites/hud/mouse_button.png" id="9_nf3iw"]
+[ext_resource type="Texture2D" uid="uid://b2kq1sgavs1ok" path="res://sprites/hud/mouse_icon_m1.png" id="10_mds26"]
+[ext_resource type="Texture2D" uid="uid://r68i0ryfx73s" path="res://sprites/hud/mouse_icon_m2.png" id="11_tu6re"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lh081"]
+shader = ExtResource("8_436t0")
+shader_parameter/clr = Color(0.843137, 0.14902, 0.219608, 1)
+shader_parameter/progress = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2w2gb"]
+shader = ExtResource("8_436t0")
+shader_parameter/clr = Color(0.843137, 0.14902, 0.219608, 1)
+shader_parameter/progress = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5ml34"]
 size = Vector2(512, 352)
@@ -108,6 +123,29 @@ hframes = 2
 position = Vector2(-104, 128)
 texture = ExtResource("6_unjmp")
 hframes = 2
+
+[node name="Mouse" type="Sprite2D" parent="PlayerTopDown/Camera2D/HUD"]
+position = Vector2(137, 128)
+texture = ExtResource("7_f2oc6")
+
+[node name="MouseButton1" type="Sprite2D" parent="PlayerTopDown/Camera2D/HUD"]
+material = SubResource("ShaderMaterial_lh081")
+position = Vector2(128, 123)
+texture = ExtResource("9_nf3iw")
+
+[node name="MouseButton2" type="Sprite2D" parent="PlayerTopDown/Camera2D/HUD"]
+material = SubResource("ShaderMaterial_2w2gb")
+position = Vector2(146, 123)
+texture = ExtResource("9_nf3iw")
+flip_h = true
+
+[node name="MouseIconM1" type="Sprite2D" parent="PlayerTopDown/Camera2D/HUD"]
+position = Vector2(129, 123)
+texture = ExtResource("10_mds26")
+
+[node name="MouseIconM2" type="Sprite2D" parent="PlayerTopDown/Camera2D/HUD"]
+position = Vector2(145, 123)
+texture = ExtResource("11_tu6re")
 
 [node name="MenuGameOver" type="Node2D" parent="PlayerTopDown/Camera2D"]
 visible = false

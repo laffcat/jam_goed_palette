@@ -1,7 +1,7 @@
 extends Node2D
 
 const ROBIT = preload("res://scenes/top/enemy_top/robit.tscn")
-const SPAWN_DELAY := 1.2
+const SPAWN_DELAY := .86
 
 var spawn_delay_mult := 1.0
 var spawning := true
