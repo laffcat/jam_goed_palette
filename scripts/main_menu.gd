@@ -82,11 +82,21 @@ func receive_input(event: InputEvent):
 					"Lam":
 						OS.shell_open("https://laffcat.itch.io/")
 						$SFX/DingSmall.play()
+					"Assets1":
+						OS.shell_open("https://hyell.itch.io/1bit-dungeon")
+						$SFX/DingSmall.play()
+					"Assets2":
+						OS.shell_open("https://kronbits.itch.io/freesfx")
+						$SFX/DingSmall.play()
+					"Assets3":
+						OS.shell_open("https://bdragon1727.itch.io/free-smoke-fx-pixel-2")
+						$SFX/DingSmall.play()
 						
 
 
 
 func _ready(): 
+	Globals.game_end()
 	Globals.menu_current = self
 	MusicGlobal.stop()
 

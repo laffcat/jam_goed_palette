@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 signal update_ui(hp, rad)
+signal died
 
 @onready var coyote_timer: Timer = $CoyoteTimer
 @onready var run_sound: AudioStreamPlayer2D = $RunSound
@@ -11,10 +12,17 @@ const SPEED = 200.0
 const JUMP_VELOCITY = -300.0
 const ACC = 30.0
 
-var hp:float = 10.0 #max 10
-var radiation:float = 0.0 #max 100
+var hp:float = 12.0: #max 12
+	set(f):
+		hp = f
+		update_ui.emit(hp, radiation)
+var radiation:float = 0.0: #max 200
+	set(f):
+		radiation = f
+		update_ui.emit(hp, radiation)
 var inventory: int = 0
 
+var iradiated:float = 0.0
 var coyote := false
 var jumping := false
 var timer:float = 0.0
@@ -28,8 +36,12 @@ var air_borne := true:
 
 func _physics_process(delta: float) -> void:
 	timer += delta
-	if timer > 1e20:
-		timer = 20.0
+	if iradiated < 0.0:
+		iradiated = 0.0
+	elif iradiated:
+		radiation += iradiated * delta
+		if radiation > 200.0: death()
+	
 	# Add the gravity.
 	if not is_on_floor():
 		air_borne = true
@@ -101,7 +113,6 @@ func getting_hit() -> void:
 	$Gun.visible = false
 	timer = 0.0
 	hp -= 1.0
-	emit_signal("update_ui", hp, radiation)
 	await get_tree().create_timer(1.0).timeout
 	invulnerable = false
 	$Gun.visible = true
@@ -109,7 +120,7 @@ func getting_hit() -> void:
 		death()
 		
 func death() -> void:
-	pass
+	died.emit()
 	#play animation?
 	#game over signal -> option to restart
 
@@ -123,6 +134,9 @@ func pick_up(amount: int):
 
 func check_inv():
 	pass
+
+func iradiation(amount:float) ->void:
+	iradiated += amount
 
 #Sort death & restart screen; What does radiation do? - something about tint?; 
 #Grab and leave gameplay - can we have multiple pathways? - can we proc generate? 

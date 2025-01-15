@@ -38,7 +38,7 @@ shader_parameter/static_mult = 0.5
 shader_parameter/threshold = -2.0
 shader_parameter/static = ExtResource("7_20e2q")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_g5i0k"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pnos3"]
 texture = ExtResource("5_je4rd")
 texture_region_size = Vector2i(20, 24)
 0:0/0 = 0
@@ -54,7 +54,7 @@ texture_region_size = Vector2i(20, 24)
 
 [sub_resource type="TileSet" id="TileSet_r6cwl"]
 tile_size = Vector2i(20, 24)
-sources/0 = SubResource("TileSetAtlasSource_g5i0k")
+sources/0 = SubResource("TileSetAtlasSource_pnos3")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lh081"]
 shader = ExtResource("8_436t0")

@@ -6,8 +6,9 @@ extends CharacterBody2D
 var player:CharacterBody2D
 var active := true
 var invuln := false
-var jumping := false
+var jumping := true
 var dashing := false
+var cd := 0.0
 
 func pause(): active = false
 func unpause(): active = true
@@ -16,10 +17,12 @@ func _ready():
 	pass
 	
 func _physics_process(delta: float) -> void:
-	if dashing:
+	if dashing and cd > 1.5:
+		cd = 0.0
 		pass
-	
+		
 	elif active:
+		cd += delta
 		var p_pos := player.global_position
 		var dir := global_position.direction_to(p_pos)
 		if absf(global_position.x - p_pos.x) > 480.0:
@@ -58,6 +61,7 @@ func damage(dmg : int, dir : Vector2):
 		$Area2D.monitoring = false
 		set_collision_mask_value(1, false)
 		set_collision_mask_value(2, false)
+		Globals.score += 70
 		$AnimatedSprite2D.play("death")
 		await $AnimatedSprite2D.animation_finished
 		queue_free()
@@ -80,6 +84,7 @@ func dash_atk(dir_x: float):
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property(self, "velocity", Vector2(dir_x, 0.0) * speed, 2.0)
+	await tween.finished
 	dashing = false
 
 

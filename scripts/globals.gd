@@ -40,6 +40,7 @@ func game_init():
 
 func game_end():
 	tutorial_done = false
+	score = 0
 
 
 #var menus_active := false

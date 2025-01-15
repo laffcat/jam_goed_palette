@@ -36,12 +36,6 @@ var active := true
 func sprite(frame : int): for each in sprites: each.frame = frame
 
 
-func pause(): 
-	active = false
-	Globals.menu_current = $Camera2D/MenuPause
-func unpause(): 
-	active = true
-	Globals.menu_current = null
 
 func cleanup():
 	if tween_shoot: tween_shoot.kill()
@@ -49,8 +43,15 @@ func cleanup():
 	$Camera2D/HUD/MouseButton1.material.set_shader_parameter("progress", 1.0)
 	$Camera2D/HUD/MouseButton2.material.set_shader_parameter("progress", 1.0)
 	
+func pause(): 
+	active = false
+	Globals.menu_current = $Camera2D/MenuPause
+func unpause(): 
+	active = true
+	Globals.menu_current = null
 
 func _ready():
+	cleanup()
 	Globals.paused.connect(pause)
 	Globals.unpaused.connect(unpause)
 	Globals.player = self
@@ -61,6 +62,7 @@ func _ready():
 		AudioServer.set_bus_effect_enabled(1, 1, false)
 	if !Globals.tutorial_done:
 		Globals.game_init()
+		$Camera2D/HUD/ScoreDisplay.draw_score()
 	else:
 		Globals.starting_score_tank = Globals.score
 		$Camera2D/HUD/ScoreDisplay.draw_score()
@@ -80,7 +82,7 @@ func _process(delta: float) -> void:
 		hurt()
 	if active and hp > 0:
 		$TankTop.rotation = global_position.direction_to(Globals.cursor.global_position).angle()
-		if Input.is_action_pressed("atk1"): shoot()
+		if Input.is_action_pressed("atk1") or Input.is_action_pressed("jump"): shoot()
 		if Input.is_action_pressed("atk2"): shoot_beam()
 
 

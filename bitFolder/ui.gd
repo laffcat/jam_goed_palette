@@ -1,31 +1,57 @@
 extends CanvasLayer
 
-@onready var health_bar: ProgressBar = $Container/MarginContainer/HBoxContainer/HPBox/HP
-@onready var hp_label: Label = $Container/MarginContainer/HBoxContainer/HPBox/Label
+@onready var health_bar: ProgressBar = $Container/PlayUI/HBoxContainer/HPBox/HP
+@onready var rad_bar: ProgressBar = $Container/PlayUI/HBoxContainer/InfBox/Radiation
 
-@onready var rad_bar: ProgressBar = $Container/MarginContainer/HBoxContainer/InfBox/Radiation
-@onready var rad_label: Label = $Container/MarginContainer/HBoxContainer/InfBox/Label
+@onready var play_ui: MarginContainer = $Container/PlayUI
+@onready var pause_menu: PanelContainer = $Container/PauseMenu
+@onready var score_label: Label = $Container/PlayUI/MaxScore
 
-
-
-func shake_node(subj: Node, bounces: int, distance, col: Color) -> void:
-	var tween = create_tween()
-	tween.set_ease(Tween.EASE_OUT)
-	var original_position: Vector2 = subj.position
-	subj.modulate = col
-	for e in bounces: #alternative set_loops(bounces)
-		tween.tween_property(subj, "position", Vector2(subj.position.x + distance, subj.position.y), 0.1)
-		distance *= -0.8
-	tween.tween_property(subj, "position", original_position, 0.1)
-	await tween.finished 
-	subj.modulate = Color.WHITE
-
-
-func _on_character_just_got_grabbed() -> void:
-	pass
-	#shake_node(bal, 7, 40.0, Color.DARK_RED)
 
 
 func _on_side_character_update_ui(hp: float, rad: float) -> void:
 	health_bar.value = hp
 	rad_bar.value = rad
+
+func _process(delta: float) -> void:
+	un_pause()
+	score_label.text = "Score: " + str(Globals.score)
+	
+
+func un_pause() -> void:
+	if Input.is_action_just_pressed("ui_cancel"):
+		if get_tree().paused == false:
+			get_tree().paused = true
+			play_ui.visible = false
+			pause_menu.visible = true
+		else:
+			get_tree().paused = false
+			play_ui.visible = true
+			pause_menu.visible = false
+
+func _on_resume_pressed() -> void:
+	get_tree().paused = false
+	play_ui.visible = true
+	pause_menu.visible = false
+
+func _on_back_pressed() -> void:
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+
+func _on_exit_pressed() -> void:
+	get_tree().quit()
+
+func _on_restart_pressed() -> void:
+	get_tree().paused = false
+	Globals.game_end()
+	get_tree().change_scene_to_file("res://scenes/top/game_topdown.tscn")
+
+
+func _on_side_character_died() -> void:
+	get_tree().paused = true
+	play_ui.visible = false
+	pause_menu.visible = true
+	$Container/PauseMenu/MarginContainer/VBoxContainer/Resume.visible = false
+	$Container/PauseMenu/MarginContainer/VBoxContainer/Label.text = str("Died, try again...")
+	$ScoreDisplayHigh.visible = true
+	$ScoreDisplayHigh.setup_display()

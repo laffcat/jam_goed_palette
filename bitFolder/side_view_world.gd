@@ -7,6 +7,8 @@ extends Node2D
 @onready var tile_maps: Node2D = $Tint/TileMaps
 @onready var tile_depo: Node2D = $Tint/TileDepo
 
+@onready var player_follower: Node2D = $Tint/PlayerFollower
+
 var distance_traveled: float = 0.0
 var end_reached: bool = false
 const PALETTE = [Color(0, 0, 0), Color(255, 255, 255), Color(215, 38, 56), Color(244, 96, 54), Color(255, 210, 63), Color(38, 84, 124), Color(33, 161, 121), Color(0, 252, 243)]
@@ -18,6 +20,8 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	var player_pos:Vector2 = player.global_position 
+	if player_follower:
+		player_follower.global_position.x = player_pos.x
 	if !spawner_group:
 		return
 	

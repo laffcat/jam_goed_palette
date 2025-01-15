@@ -10,6 +10,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if body.has_method("pick_up"):
 		player = body
 		body.pick_up(amount)
+		Globals.score += amount
 		$AudioStreamPlayer2D.play()
 		visible = false
 

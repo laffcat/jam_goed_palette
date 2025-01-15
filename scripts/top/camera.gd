@@ -19,7 +19,7 @@ func _process(delta : float):
 		loop_bg(tile_diff)
 		bg_tile_current = new_tile
 		
-		if Globals.score - Globals.starting_score_tank > 100 and $HUD/BunkerArrow.target == null:
+		if Globals.score - Globals.starting_score_tank > 200 and $HUD/BunkerArrow.target == null:
 			var bunk = BUNKER.instantiate()
 			$"../../EnemyRoot".add_child(bunk)
 			bunk.global_position = Globals.player.global_position \

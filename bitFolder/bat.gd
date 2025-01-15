@@ -39,6 +39,7 @@ func damage(dmg : int, dir : Vector2):
 		set_collision_mask_value(1, false)
 		set_collision_mask_value(2, false)
 		$AnimatedSprite2D.play("death")
+		Globals.score += 10
 		await $AnimatedSprite2D.animation_finished
 		queue_free()
 	else:
