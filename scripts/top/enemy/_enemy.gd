@@ -8,6 +8,12 @@ var vel_add_tween : Tween
 var vel_mult := 1.0
 var active := true
 var invuln := false
+var offscreen_clock := 0.0
+var offscreen := true:
+	set(b):
+		offscreen = b
+		if !b: offscreen_clock = 0.0
+const DESPAWN_TIME := 5.0
 var health := 6
 
 func pause(): active = false
@@ -16,6 +22,12 @@ func unpause(): active = true
 func _ready():
 	Globals.paused.connect(pause)
 	Globals.unpaused.connect(unpause)
+	
+func _process(delta: float) -> void:
+	if offscreen: 
+		offscreen_clock += delta
+		if offscreen_clock > DESPAWN_TIME:
+			queue_free()
 	
 func _physics_process(delta: float) -> void:
 	if active:

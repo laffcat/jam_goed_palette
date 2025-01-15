@@ -12,6 +12,7 @@ const TURNING = 5.0
 var speed_current := 0.0
 var vel_dir := Vector2(1.0, 0.0)
 var tween_shoot : Tween
+var tween_beam_cd : Tween
 var can_shoot := true
 var can_beam := true
 
@@ -41,6 +42,13 @@ func pause():
 func unpause(): 
 	active = true
 	Globals.menu_current = null
+
+func cleanup():
+	if tween_shoot: tween_shoot.kill()
+	if tween_beam_cd: tween_beam_cd.kill()
+	$Camera2D/HUD/MouseButton1.material.set_shader_parameter("progress", 1.0)
+	$Camera2D/HUD/MouseButton2.material.set_shader_parameter("progress", 1.0)
+	
 
 func _ready():
 	Globals.paused.connect(pause)
@@ -121,9 +129,10 @@ func shoot_beam():
 	can_shoot = false
 	can_beam = false
 	$Camera2D/HUD/MouseIconM2.modulate = Color.BLACK
-	var tween_cooldown_beam := create_tween()
+	if tween_beam_cd: tween_beam_cd.kill()
+	tween_beam_cd = create_tween()
 	$Camera2D/HUD/MouseButton2.material.set_shader_parameter("progress", 0.0)
-	tween_cooldown_beam.tween_property($Camera2D/HUD/MouseButton2, "material:shader_parameter/progress", 1.0, 13.0)
+	tween_beam_cd.tween_property($Camera2D/HUD/MouseButton2, "material:shader_parameter/progress", 1.0, 13.0)
 	$SFX/ShootBeamCharge.play(.8)
 	
 	if tween_shoot: tween_shoot.kill()
@@ -146,7 +155,7 @@ func shoot_beam():
 	await get_tree().create_timer(1.1).timeout
 	can_shoot = true
 	
-	await tween_cooldown_beam.finished
+	await tween_beam_cd.finished
 	$Camera2D/HUD/MouseIconM2.modulate = Color.WHITE
 	can_beam = true
 	
@@ -178,7 +187,7 @@ func hurt():
 		await get_tree().create_timer(3.0).timeout
 		if !OS.get_name() == "HTML5":
 			AudioServer.set_bus_effect_enabled(1, 1, true)
-			MusicGlobal.volume_db = -11.0
+			MusicGlobal.volume_db = -10.0
 			MusicGlobal.pitch_scale = .8
 			MusicGlobal.play(t)
 			var tween_filter = create_tween()
@@ -191,7 +200,7 @@ func update_hp_meter():
 			hud_hp_pts[each - 1].frame = 1
 
 func _on_area_hurt_body_entered(body: Node2D) -> void:
-	if body is EnemyTop and body.global_position.distance_to(global_position) < 20: 
+	if body is EnemyTop and body.global_position.distance_to(global_position) < 30: 
 		if body.health <= 0: return
 		hurt()
 

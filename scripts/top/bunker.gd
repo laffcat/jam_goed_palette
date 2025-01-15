@@ -9,4 +9,5 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		#print("...with in-range player")
 		Globals.last_health_tank = Globals.player.hp
 		Globals.tutorial_done = true
+		Globals.player.cleanup()
 		get_tree().change_scene_to_file(dest)

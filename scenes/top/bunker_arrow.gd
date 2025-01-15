@@ -5,12 +5,13 @@ var target = null
 
 func _process(delta: float) -> void:
 	if target != null:
-		var dir := Globals.player.global_position.direction_to(target.global_position)
 		var dist := Globals.player.global_position.distance_to(target.global_position)
 		if dist > 3000: deactivate()
-		position = dir * min(120, dist - 30)
+		var dir := Globals.player.global_position.direction_to(target.global_position)
+		var ratio := dist / 3000
+		position = dir * min(190 * (.4 + .6 * ratio), dist - 30)
 		rotation = dir.angle()
-		material.set_shader_parameter("threshold", -.5 - dist / 3000)
+		material.set_shader_parameter("threshold", -.5 - ratio)
 		
 func activate(tgt: Node2D):
 	active = true
@@ -33,3 +34,4 @@ func deactivate():
 	Globals.starting_score_tank = Globals.score - 50
 	material.set_shader_parameter("threshold", -2)
 	material.set_shader_parameter("static_mult", .5)
+	$"../../SpawnerPivot/SpawnerPoint".spawn_delay_mult = 1.0
