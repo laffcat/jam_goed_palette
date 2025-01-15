@@ -26,7 +26,10 @@ func _process(delta: float) -> void:
 
 
 func spawn():
-	$"..".rotate(deg_to_rad(randi_range(70, 130)))
+	if Globals.player.speed_current > 50.0:
+		$"..".rotation = Globals.player.vel_dir.rotated(deg_to_rad(randi_range(-30, 30))).angle()
+	else:
+		$"..".rotate(deg_to_rad(randi_range(-70, 120)))
 	var new_spawn : EnemyTop = ROBIT.instantiate()
 	$"../../../../EnemyRoot".add_child(new_spawn)
 	new_spawn.global_position = global_position

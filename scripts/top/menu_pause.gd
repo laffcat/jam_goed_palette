@@ -22,6 +22,7 @@ func receive_input(event: InputEvent):
 				$PauseOptions/Arrow.position = $PauseOptions/Exit.position
 		Opt.EXIT:
 			if event.is_action_pressed("jump"):
+				Globals.game_end()
 				get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 			if event.is_action_pressed("up") or event.is_action_pressed("down"):
 				current = Opt.RESET

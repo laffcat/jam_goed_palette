@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bo54pmg5jw521" path="res://bitFolder/LevelParts/tile_map_intro.tscn" id="2_1l3gf"]
 [ext_resource type="PackedScene" uid="uid://dc4y2jqvnm60y" path="res://bitFolder/pick_up2.tscn" id="4_dst4d"]
 [ext_resource type="Texture2D" uid="uid://cqy644olc8vax" path="res://bitFolder/Assets/1bitDungeon/coin2.png" id="5_iko65"]
-[ext_resource type="PackedScene" uid="uid://bigmffbu3smfx" path="res://bitFolder/side_view_world.tscn" id="7_ko7wq"]
+[ext_resource type="PackedScene" uid="uid://cdu14b4vpdt3x" path="res://scenes/top/game_topdown.tscn" id="7_2vjqx"]
 [ext_resource type="PackedScene" uid="uid://bc08gr3ma0glj" path="res://bitFolder/side_character.tscn" id="10_ksh30"]
 [ext_resource type="PackedScene" uid="uid://c5fxcs8ic03bd" path="res://bitFolder/exit_point.tscn" id="12_5dyws"]
 [ext_resource type="PackedScene" uid="uid://bkn8idh1nrk0l" path="res://bitFolder/ui.tscn" id="13_eyo07"]
@@ -110,7 +110,7 @@ sprite_frames = SubResource("SpriteFrames_jk4qo")
 
 [node name="Exit_point" parent="." instance=ExtResource("12_5dyws")]
 position = Vector2(160, 111)
-next_level = ExtResource("7_ko7wq")
+next_level = ExtResource("7_2vjqx")
 required_inv = 50
 
 [node name="UI" parent="." instance=ExtResource("13_eyo07")]

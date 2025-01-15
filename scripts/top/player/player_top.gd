@@ -10,7 +10,7 @@ const DECEL = .6
 const TURNING = 5.0
 
 var speed_current := 0.0
-var vel_dir := Vector2.ZERO
+var vel_dir := Vector2(1.0, 0.0)
 var tween_shoot : Tween
 var can_shoot := true
 var can_beam := true
@@ -46,12 +46,24 @@ func _ready():
 	Globals.paused.connect(pause)
 	Globals.unpaused.connect(unpause)
 	Globals.player = self
-	await get_tree().create_timer(.1).timeout
-	invuln = false
 	if OS.get_name() != "HTML5":
 		MusicGlobal.pitch_scale = 1
 		MusicGlobal.volume_db = -9.0
-	MusicGlobal.play()
+		AudioServer.get_bus_effect(1, 1).cutoff_hz = 1
+		AudioServer.set_bus_effect_enabled(1, 1, false)
+	if !Globals.tutorial_done:
+		Globals.game_init()
+	else:
+		Globals.starting_score_tank = Globals.score
+		$Camera2D/HUD/ScoreDisplay.draw_score()
+		var bunkorpse = load("res://scenes/top/world/bunker_destroyed.tscn").instantiate()
+		$"../EnemyRoot".add_child(bunkorpse)
+		bunkorpse.global_position = round(40 * Vector2.UP.rotated(deg_to_rad(randi_range(1, 360))))
+		hp = (min(5, Globals.last_health_tank + 2))
+		update_hp_meter()
+	
+	await get_tree().create_timer(.1).timeout
+	invuln = false
 
 
 func _process(delta: float) -> void:
@@ -148,7 +160,7 @@ func hurt():
 	hp -= 1
 	update_hp_meter()
 	await get_tree().create_timer(.6).timeout
-	if hp > 0:
+	if hp > 0: # still kickin
 		sprite(0)
 		await get_tree().create_timer(.25).timeout
 		invuln = false
@@ -156,7 +168,7 @@ func hurt():
 			if each is EnemyTop and each.global_position.distance_to(global_position) < 20: 
 				hurt()
 				break
-	else:
+	else: # dead
 		var t := MusicGlobal.get_playback_position()
 		MusicGlobal.stop()
 		$SFX/GameOver.play()
@@ -165,9 +177,13 @@ func hurt():
 		Globals.menu_current = $Camera2D/MenuGameOver
 		await get_tree().create_timer(3.0).timeout
 		if !OS.get_name() == "HTML5":
-			MusicGlobal.volume_db = -13.0
+			AudioServer.set_bus_effect_enabled(1, 1, true)
+			MusicGlobal.volume_db = -11.0
 			MusicGlobal.pitch_scale = .8
 			MusicGlobal.play(t)
+			var tween_filter = create_tween()
+			$TankTop/SprTankBarrel.position.x = 5.5
+			tween_filter.tween_property(AudioServer.get_bus_effect(1, 1), "cutoff_hz", 900, 3.2)
 
 func update_hp_meter():
 	for each in 6:

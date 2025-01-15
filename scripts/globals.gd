@@ -12,6 +12,7 @@ var score := 0:
 		emit_signal("score_updated")
 var score_high := 0
 
+
 const HALF_SCR = Vector2(240, 160)
 
 var main : Node2D
@@ -20,11 +21,26 @@ var cursor : Cursor
 
 var bunker_level_pool_full : Array[String] = []
 var bunker_level_pool : Array[String] = []
-func pull_bunker_level() -> String:
+func pop_bunker_level() -> String:
 	if bunker_level_pool == []: bunker_level_pool = bunker_level_pool_full.duplicate()
-	var index := randi_range(0, len(bunker_level_pool) - 1)
-	var pull : String = bunker_level_pool.pop_at(index)
-	return pull
+	return bunker_level_pool.pop_at( randi_range(0, len(bunker_level_pool) - 1) )
+
+var tutorial_done := false
+var last_health_tank := 0
+var last_health_runner := 0
+var starting_score_tank := 0
+
+
+func game_init():
+	MusicGlobal.play()
+	score = 0
+	last_health_tank = 0
+	last_health_runner = 0
+	starting_score_tank = 0
+
+func game_end():
+	tutorial_done = false
+
 
 #var menus_active := false
 var menu_current = null:

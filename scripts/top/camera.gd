@@ -3,6 +3,8 @@ extends Camera2D
 
 const TILE_SIZE := Vector2i(480, 320)
 
+const BUNKER = preload("res://scenes/top/world/bunker.tscn")
+
 var bg_tile_current := Vector2i.ZERO
 @onready var bg_tiles_root: Node2D = $"../../Grass"
 
@@ -16,6 +18,15 @@ func _process(delta : float):
 		var tile_diff := new_tile - bg_tile_current
 		loop_bg(tile_diff)
 		bg_tile_current = new_tile
+		
+		if Globals.score - Globals.starting_score_tank > 100 and $HUD/BunkerArrow.target == null:
+			var bunk = BUNKER.instantiate()
+			$"../../EnemyRoot".add_child(bunk)
+			bunk.global_position = Globals.player.global_position \
+				.normalized() \
+				.rotated(deg_to_rad(randi_range(-50, 50))) \
+				* 2000
+			$HUD/BunkerArrow.activate(bunk)
 	
 
 func get_current_bg_tile() -> Vector2i:
